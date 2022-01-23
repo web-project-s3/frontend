@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  canSubmit(){
+  canSubmit() {
     const email = this.user.get("email");
     const lastname = this.user.get("lastname");
     const firstname = this.user.get("firstname");
@@ -64,5 +64,4 @@ export class RegisterComponent implements OnInit {
       }
     })
   }
-
 }

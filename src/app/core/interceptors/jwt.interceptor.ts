@@ -6,13 +6,11 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
 import { environment } from 'src/environments/environment';
-import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 
 @Injectable()
 export class Jwt implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor() {}
 
   intercept(
     request: HttpRequest<unknown>,

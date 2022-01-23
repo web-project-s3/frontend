@@ -47,6 +47,15 @@ export class AuthService implements OnDestroy {
 
   constructor(private router: Router, private http: HttpClient) {
     window.addEventListener('storage', this.storageEventListener.bind(this));
+    this.refreshToken().subscribe();
+  }
+
+  logUser() {
+    setTimeout(() => {
+      console.log(this._user.getValue());
+      this.logUser();
+    },
+    1000);
   }
 
   ngOnDestroy(): void {

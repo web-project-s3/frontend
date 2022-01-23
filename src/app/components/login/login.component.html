@@ -1,24 +1,29 @@
-LOGIN
+<div class="card center-div">
+  <div class="flex flex-column card-container border-round border-solid  border-primary border-1 w-9">
+    <div class="flex justify-content-center flex-wrap">
+      <h3>
+        Se connecter
+      </h3>
+    </div>
+    <p-divider></p-divider>
+    <div class="p-5 px-8 p-card-content flex flex-wrap formgrid grid justify-content-center">
+      <form [formGroup]="user" >
+        <div [hidden]="!error" class="col-12 formgroup">
+          <p-message severity="error" [text]="errorValue"></p-message>
+        </div>
+        <div class="col-12 mb-2 md:col-2 md:mb-0 p-float-label form-group mt-3">
+            <input id="email" type="email" name="email" formControlName="email" [class.is-invalid] = "user.get('email')?.invalid && user.get('email')?.touched" pInputText>
+            <label for="email">Email</label>
+        </div>
+        <div class="col-12 mb-2 md:mb-0 p-float-label mt-4 form-group">
+          <p-password formControlName="password" [feedback]="false" [toggleMask]="true"></p-password>
+          <label for="password">Mot de passe</label>
+        </div>
 
-<!-- <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
-
-    <mat-card class="box">
-      <mat-card-header>
-        <mat-card-title>Log in</mat-card-title>
-      </mat-card-header>
-  
-      <form class="example-form">
-        <mat-card-content>
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Username">
-          </mat-form-field>
-  
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Password">
-          </mat-form-field>
-        </mat-card-content>
-        <button mat-stroked-button color="accent" class="btn-block">Log in</button>
+        <div class="col-10 col-offset-2 p-float-label mt-4">
+          <p-button [loading]="loading" [disabled]="!canSubmit()" label="Se connecter" icon="pi pi-check" iconPos="right" (onClick)="onSubmit()"></p-button>
+        </div>
       </form>
-    </mat-card>
-  
-</div> -->
+    </div>
+  </div>
+<div>

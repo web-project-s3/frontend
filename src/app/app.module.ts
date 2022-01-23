@@ -6,10 +6,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from "@angular/flex-layout"
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
+import { Jwt } from './core/interceptors/jwt.interceptor';
 
 
 @NgModule({
@@ -29,7 +30,11 @@ import { RegisterModule } from './components/register/register.module';
     LoginModule,
     RegisterModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: Jwt, multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
