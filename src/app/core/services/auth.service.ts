@@ -17,7 +17,7 @@ interface LoginResult extends User{
 export class AuthService implements OnDestroy {
   private readonly apiUrl = `${environment.apiUrl}users`;
   private timer: Subscription | null = null;
-  private _user = new BehaviorSubject<User | null>(null);
+  _user = new BehaviorSubject<User | null>(null);
   user$: Observable<User | null> = this._user.asObservable();
 
   private storageEventListener(event: StorageEvent) {
@@ -48,14 +48,6 @@ export class AuthService implements OnDestroy {
   constructor(private router: Router, private http: HttpClient) {
     window.addEventListener('storage', this.storageEventListener.bind(this));
     this.refreshToken().subscribe();
-  }
-
-  logUser() {
-    setTimeout(() => {
-      console.log(this._user.getValue());
-      this.logUser();
-    },
-    1000);
   }
 
   ngOnDestroy(): void {
@@ -162,5 +154,48 @@ export class AuthService implements OnDestroy {
 
   private stopTokenTimer() {
     this.timer?.unsubscribe();
+  }
+
+  pushNewValue(user: any) {
+    const currentUser = this._user.getValue();
+    if ( currentUser )
+    {
+      Object.assign(currentUser, user);
+      this._user.next(currentUser);
+    }
+  }
+
+  isLoggedIn() {
+    return this._user.getValue() != null;
+  }
+
+  worksAtRestaurant() {
+    const user = this._user.getValue();
+
+    return user != null && ( user.restaurantEmployeeId != null || user.restaurantOwnerId != null );
+  }
+
+  worksAtBeach() {
+    const user = this._user.getValue();
+
+    return user != null && ( user.restaurantOwnerId != null || user.restaurantEmployeeId != null );
+  }
+
+  ownsRestaurant() {
+    const user = this._user.getValue();
+
+    return user != null && user.restaurantOwnerId != null;
+  }
+
+  ownsBeach() {
+    const user = this._user.getValue();
+
+    return user != null && user.beachOwnerId != null;
+  }
+
+  isAdmin() {
+    const user = this._user.getValue();
+
+    return user != null && user.isAdmin;
   }
 }

@@ -1,0 +1,23 @@
+<div class="card center-div">
+  <div class="flex flex-column card-container border-round border-solid  border-primary border-1 w-9">
+    <div class="flex justify-content-center flex-wrap">
+      <h2 class="mt-5 text-center">
+        Veuillez rentrer le code de votre établissement
+      </h2>
+    </div>
+    <p-divider></p-divider>
+    <div class="p-5 px-8 p-card-content center-div-no-height grid align-items-center align-content-center">
+      <div *ngIf="this.error" class="center-div-no-height col-12">
+        <p-message severity="error" [text]="errorValue"></p-message>
+      </div>
+      <div class="p-float-label mt-3">
+          <input id="code" pInputText type="text" name="code" [(ngModel)]="this.code" />
+          <label for="code">Code</label>
+      </div>
+
+      <div class="mt-4 ml-1">
+        <p-button [loading]="loading" [disabled]="!canSubmit()" label="S'enregistrer" icon="pi pi-check" iconPos="right" (onClick)="onSubmit()"></p-button>
+      </div>
+    </div>
+  </div>
+<div>

@@ -10,6 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
+import { BannerModule } from './components/banner/banner.module';
 import { Jwt } from './core/interceptors/jwt.interceptor';
 
 
@@ -28,7 +29,8 @@ import { Jwt } from './core/interceptors/jwt.interceptor';
     FormsModule,
     ReactiveFormsModule,
     LoginModule,
-    RegisterModule
+    RegisterModule,
+    BannerModule
   ],
   providers: [
     {
