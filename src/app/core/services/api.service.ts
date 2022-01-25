@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Restaurant } from '../models/restaurant';
 import { User } from '../models/user';
 import { AuthService } from './auth.service';
 
@@ -28,6 +28,18 @@ export class ApiService {
     });
 
     return request;
+  }
+
+  getRestaurantId(id: number) {
+    return this.http.get<Restaurant>(`${this.apiUrl}restaurants/${id}`);
+  }
+
+  patchRestaurant(name: string) {
+    return this.http.patch<Restaurant>(`${this.apiUrl}restaurants`, { name });
+  }
+
+  addBeach(restaurantId: number, codeBeach: string) {
+    return this.http.post<any>(`${this.apiUrl}restaurants/${restaurantId}/beach`, { code: codeBeach });
   }
 
 }

@@ -37,6 +37,7 @@ export class BannerComponent implements OnInit {
       {
         label:'Édition du restaurant',
         icon:'pi pi-fw pi-pencil',
+        command: this.goToRestaurantEditPage.bind(this)
       },
       {
         label:'Produits',
@@ -99,7 +100,7 @@ export class BannerComponent implements OnInit {
 
   items: MenuItem[] = [];
 
-  constructor(private auth: AuthService ) {
+  constructor(private auth: AuthService, private router: Router ) {
     this.auth.user$.subscribe({
       next: (value) => this.onUserChange()
     })
@@ -139,11 +140,11 @@ export class BannerComponent implements OnInit {
       this.restaurantItem.items![2].visible = this.auth.worksAtRestaurant();
 
       // Beach :
-      this.restaurantItem.visible = this.auth.worksAtBeach();
+      this.beachItem.visible = this.auth.worksAtBeach();
       // Edit
-      this.restaurantItem.items![0].visible = this.auth.ownsBeach();
+      this.beachItem.items![0].visible = this.auth.ownsBeach();
       // Orders
-      this.restaurantItem.items![2].visible = this.auth.worksAtBeach();
+      this.beachItem.items![1].visible = this.auth.worksAtBeach();
 
       // Admin :
       this.adminItem.visible = this.auth.isAdmin();
@@ -154,4 +155,7 @@ export class BannerComponent implements OnInit {
       this.ngOnInit()
     }
 
+    goToRestaurantEditPage() {
+      this.router.navigate(["/restaurant/1/edit"])
+    }
 }

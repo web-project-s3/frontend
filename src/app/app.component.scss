@@ -1,5 +1,10 @@
-body {
-  background-color: var(--surface-a);
+html {
+  background-color: var(--surface-b);
   font-family: var(--font-family);
   color: var(--text-color);
 }
+
+:host ::ng-deep .p-menubar {
+  background-color: var(--blue-900) !important;
+}
+

@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
-import { map, tap, delay, finalize } from 'rxjs/operators';
+import { map, tap, delay, filter } from 'rxjs/operators';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
 
@@ -17,8 +17,10 @@ interface LoginResult extends User{
 export class AuthService implements OnDestroy {
   private readonly apiUrl = `${environment.apiUrl}users`;
   private timer: Subscription | null = null;
-  _user = new BehaviorSubject<User | null>(null);
-  user$: Observable<User | null> = this._user.asObservable();
+
+  // Undefined = not fetched yet, null = not logged in
+  _user = new BehaviorSubject<User | null | undefined>(undefined);
+  user$: Observable<User | null | undefined> = this._user.asObservable();
 
   private storageEventListener(event: StorageEvent) {
     if (event.storageArea === localStorage) {
@@ -95,6 +97,7 @@ export class AuthService implements OnDestroy {
     const refreshToken = localStorage.getItem('refresh_token');
     if (!refreshToken) {
       this.clearLocalStorage();
+      this._user.next(null);
       return of(null);
     }
 
@@ -178,7 +181,7 @@ export class AuthService implements OnDestroy {
   worksAtBeach() {
     const user = this._user.getValue();
 
-    return user != null && ( user.restaurantOwnerId != null || user.restaurantEmployeeId != null );
+    return user != null && ( user.beachOwnerId != null || user.beachEmployeeId != null );
   }
 
   ownsRestaurant() {

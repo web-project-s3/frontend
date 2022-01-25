@@ -11,12 +11,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
 import { BannerModule } from './components/banner/banner.module';
+import { RestaurantModule } from './components/restaurant/restaurant.module';
 import { Jwt } from './core/interceptors/jwt.interceptor';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     HttpClientModule,
@@ -30,7 +31,8 @@ import { Jwt } from './core/interceptors/jwt.interceptor';
     ReactiveFormsModule,
     LoginModule,
     RegisterModule,
-    BannerModule
+    BannerModule,
+    RestaurantModule
   ],
   providers: [
     {

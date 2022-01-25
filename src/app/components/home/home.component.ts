@@ -24,14 +24,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  onUserChange(user: User | null) {
+  onUserChange(user: User | null | undefined) {
     if ( !this.auth ) return;
     if ( !this.auth.isAdmin() && !this.auth.worksAtRestaurant() && !this.auth.worksAtBeach())
-    {
       this.mustRegister = true;
-    }
-    else {
+    else
       this.mustRegister = false;
-    }
   }
 }

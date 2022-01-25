@@ -1,3 +1,7 @@
 :host ::ng-deep p-menubarsub {
   width: 100%;
 }
+
+:host ::ng-deep p-menubar {
+  background: grey !important;
+}
