@@ -1,0 +1,76 @@
+<div class="grid card">
+  <div class="col-12 flex justify-content-center text-5xl mt-5">
+    {{this.restaurant?.name}}
+  </div>
+</div>
+<p-divider class="mx-8"></p-divider>
+
+<div class="grid card align-content-center justify-content-center align-items-center">
+  <div class="px-8 flex-column p-card-content grid align-items-center align-content-center">
+    <div *ngIf="this.error" class="col-12">
+      <p-message severity="error" [text]="errorValue"></p-message>
+    </div>
+    <div class="p-float-label mt-3 align-content-center align-items-center">
+        <input id="name" pInputText type="text" name="name" [(ngModel)]="this.name" />
+        <label for="name">Nom</label>
+    </div>
+
+    <div class="p-float-label mt-3 align-content-center align-items-center">
+      <input id="code" pInputText type="text" name="code" [(ngModel)]="this.code" [disabled]="true"/>
+      <label for="code">Code</label>
+  </div>
+
+    <div class="mt-4 ml-1">
+      <p-button [loading]="loading" [disabled]="!canSubmit()" label="Enregister" icon="pi pi-check" iconPos="right" (onClick)="onSubmit()"></p-button>
+    </div>
+  </div>
+</div>
+
+<p-divider class="mx-8"></p-divider>
+
+
+<div class="grid card align-content-center justify-content-center align-items-center">
+  <div class="flex col-12 align-content-center justify-content-center align-items-center">
+    <h2>Ajouter une plage:</h2>
+  </div>
+  <div class="px-8 flex-column p-card-content grid align-items-center align-content-center">
+    <div *ngIf="this.beachError" class="col-12">
+      <p-message severity="error" [text]="beachErrorValue"></p-message>
+    </div>
+
+    <div class="p-float-label mt-3 align-content-center align-items-center">
+      <input id="beachCode" pInputText type="text" name="beachCode" [(ngModel)]="this.beachCode"/>
+      <label for="beachCode">Code</label>
+  </div>
+
+    <div class="mt-4 ml-1">
+      <p-button [loading]="loading" [disabled]="!canSumbitBeach()" label="Ajouter" icon="pi pi-check" iconPos="right" (onClick)="onSubmitBeach()"></p-button>
+    </div>
+  </div>
+</div>
+
+<p-divider class="mx-8"></p-divider>
+
+<div>
+  <div class="col-10 col-offset-1">
+    <h2>Vos employés :</h2>
+    <p-treeTable [value]="employeesNode" [columns]="cols">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [ttSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-treeTableSortIcon [field]="col.field"></p-treeTableSortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns; let i = index">
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div>
+  <p-tabView>
+    <p-tabPanel header="Restaurants" leftIcon="pi pi-briefcase">
+      <div class="grid card align-content-center justify-content-center align-items-center">
+        <div class="flex col-12 align-content-center justify-content-center align-items-center">
+          <h2>Créer un restaurant :</h2>
+        </div>
+        <div class="px-8 flex-column p-card-content grid align-items-center align-content-center">
+          <div *ngIf="this.restaurantCreateError" class="col-12">
+            <p-message severity="error" [text]="restaurantCreateErrorValue"></p-message>
+          </div>
+
+          <div class="p-float-label mt-3 align-content-center align-items-center">
+            <input id="restaurantName" pInputText type="text" name="restaurantName" [(ngModel)]="this.restaurantName"/>
+            <label for="restaurantName">Nom du restaurant</label>
+          </div>
+
+          <div class="p-float-label mt-3 align-content-center align-items-center">
+            <input id="restaurantOwnerEmail" pInputText type="text" name="restaurantOwnerEmail" [(ngModel)]="this.restaurantOwnerEmail"/>
+            <label for="restaurantOwnerEmail">Email du propriétaire</label>
+          </div>
+
+          <div class="mt-4 ml-1">
+            <p-button [loading]="loadingNewRestaurant" [disabled]="!canSubmitNewRestaurant()" label="Ajouter" icon="pi pi-check" iconPos="right" (onClick)="onSubmitNewRestaurant()"></p-button>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Plages" leftIcon="pi pi-briefcase">
+      <div class="grid card align-content-center justify-content-center align-items-center">
+        <div class="flex col-12 align-content-center justify-content-center align-items-center">
+          <h2>Créer une plage :</h2>
+        </div>
+        <div class="px-8 flex-column p-card-content grid align-items-center align-content-center">
+          <div *ngIf="this.beachCreateError" class="col-12">
+            <p-message severity="error" [text]="beachCreateErrorValue"></p-message>
+          </div>
+
+          <div class="p-float-label mt-3 align-content-center align-items-center">
+            <input id="beachName" pInputText type="text" name="beachName" [(ngModel)]="this.beachName"/>
+            <label for="beachName">Nom de la plage</label>
+          </div>
+
+          <div class="p-float-label mt-3 align-content-center align-items-center">
+            <input id="beachOwnerEmail" pInputText type="text" name="rbeachOwnerEmail" [(ngModel)]="this.beachOwnerEmail"/>
+            <label for="beachOwnerEmail">Email du propriétaire</label>
+          </div>
+
+          <div class="mt-4 ml-1">
+            <p-button [loading]="loadingNewBeach" [disabled]="!canSubmitNewBeach()" label="Ajouter" icon="pi pi-check" iconPos="right" (onClick)="onSubmitNewBeach()"></p-button>
+          </div>
+        </div>
+      </div>
+    </p-tabPanel>
+
+
+
+    <p-tabPanel header="Utilisateurs" leftIcon="pi pi-users">
+        Content 3
+    </p-tabPanel>
+</p-tabView>
+</div>
