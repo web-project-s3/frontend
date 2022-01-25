@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './core/guards/admin.guard';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RestaurantOwnerGuard } from './core/guards/restaurant-owner.guard';
 
@@ -10,7 +11,9 @@ const routes: Routes = [
   { path: 'home',  loadChildren: () => import ("./components/home/home.module").then(m => m.HomeModule),
   canActivate: [AuthGuard]},
   { path: 'restaurant',  loadChildren: () => import ("./components/restaurant/restaurant.module").then(m => m.RestaurantModule),
-  canActivate: [RestaurantOwnerGuard]}
+  canActivate: [RestaurantOwnerGuard]},
+  { path: 'admin',  loadChildren: () => import ("./components/admin/admin.module").then(m => m.AdminModule),
+  canActivate: [AdminGuard]}
 ];
 
 @NgModule({
