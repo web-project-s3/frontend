@@ -9,6 +9,10 @@ import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { TreeTableModule } from 'primeng/treetable';
+import { ToastModule } from 'primeng/toast';
+import {TableModule} from 'primeng/table';
+
 
 
 @NgModule({
@@ -22,7 +26,10 @@ import { InputTextModule } from 'primeng/inputtext';
     AdminRoutingModule,
     FormsModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+    ToastModule,
+    TreeTableModule,
+    TableModule
   ]
 })
 export class AdminModule { }

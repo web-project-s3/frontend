@@ -15,7 +15,7 @@ export class BeachOwnerGuard implements CanActivate
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
     return this.authService.user$.pipe(map((user) => {
-        if (user && user.beachOwnerId )
+        if (user && ( user.beachOwnerId || user.isAdmin ))
           return true;
         else
         {

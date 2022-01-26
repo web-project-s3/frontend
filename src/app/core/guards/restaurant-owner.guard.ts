@@ -17,7 +17,7 @@ export class RestaurantOwnerGuard implements CanActivate
     return this.authService.user$.pipe(
       filter(user => user !== undefined),
       map((user) => {
-        if (user && user.restaurantOwnerId != null )
+        if (user && ( user.restaurantOwnerId != null || user.isAdmin ))
           return true;
         else
         {
