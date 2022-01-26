@@ -35,6 +35,10 @@ export class ApiService {
     return this.http.get<Restaurant>(`${this.apiUrl}restaurants/${id}`);
   }
 
+  getBeachId(id: number) {
+    return this.http.get<Beach>(`${this.apiUrl}beaches/${id}`);
+  }
+
   getAllRestaurants() {
     return this.http.get<Restaurant[]>(`${this.apiUrl}restaurants`)
   }
@@ -47,6 +51,10 @@ export class ApiService {
     return this.http.patch<Restaurant>(`${this.apiUrl}restaurants`, { name });
   }
 
+  patchBeach(name: string) {
+    return this.http.patch<Beach>(`${this.apiUrl}beaches`, { name });
+  }
+
   deleteRestaurant(id: number) {
     return this.http.delete(`${this.apiUrl}restaurants/${id}`);
   }
@@ -57,6 +65,10 @@ export class ApiService {
 
   addBeach(restaurantId: number, codeBeach: string) {
     return this.http.post<any>(`${this.apiUrl}restaurants/${restaurantId}/beach`, { code: codeBeach });
+  }
+
+  addRestaurant(beachId: number, codeRestaurant: string) {
+    return this.http.post<any>(`${this.apiUrl}beaches/${beachId}/restaurant`, { code: codeRestaurant });
   }
 
   createRestaurant(name: string, ownerEmail: string) {

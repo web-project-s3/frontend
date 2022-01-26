@@ -12,6 +12,8 @@ const routes: Routes = [
   canActivate: [AuthGuard]},
   { path: 'restaurant',  loadChildren: () => import ("./components/restaurant/restaurant.module").then(m => m.RestaurantModule),
   canActivate: [RestaurantOwnerGuard]},
+  { path: 'beach',  loadChildren: () => import ("./components/beach/beach.module").then(m => m.BeachModule),
+  canActivate: [RestaurantOwnerGuard]},
   { path: 'admin',  loadChildren: () => import ("./components/admin/admin.module").then(m => m.AdminModule),
   canActivate: [AdminGuard]}
 ];

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService, TreeNode } from 'primeng/api';
 import { Restaurant } from 'src/app/core/models/restaurant';
 import { ApiService } from 'src/app/core/services/api.service';
-import { SortEvent } from 'primeng/api';
 import { Router } from '@angular/router';
 import { Beach } from 'src/app/core/models/beach';
 
