@@ -40,7 +40,11 @@ export class AuthService implements OnDestroy {
             restaurantOwnerId: x.restaurantOwnerId,
             beachEmployeeId: x.beachEmployeeId,
             beachOwnerId: x.beachOwnerId,
-            isAdmin: x.isAdmin
+            isAdmin: x.isAdmin,
+            restaurantOwner: x.restaurantOwner === undefined ? null : x.restaurantOwner,
+            restaurantEmployee: x.restaurantEmployee === undefined ? null : x.restaurantEmployee,
+            beachOwner: x.beachOwner === undefined ? null : x.beachOwner,
+            beachEmployee: x.beachEmployee === undefined ? null : x.beachEmployee
           });
         });
       }
@@ -77,7 +81,11 @@ export class AuthService implements OnDestroy {
             restaurantOwnerId: x.restaurantOwnerId,
             beachEmployeeId: x.beachEmployeeId,
             beachOwnerId: x.beachOwnerId,
-            isAdmin: x.isAdmin
+            isAdmin: x.isAdmin,
+            restaurantOwner: x.restaurantOwner === undefined ? null : x.restaurantOwner,
+            restaurantEmployee: x.restaurantEmployee === undefined ? null : x.restaurantEmployee,
+            beachOwner: x.beachOwner === undefined ? null : x.beachOwner,
+            beachEmployee: x.beachEmployee === undefined ? null : x.beachEmployee
           });
           this.setLocalStorage(x);
           this.startTokenTimer();
@@ -114,7 +122,11 @@ export class AuthService implements OnDestroy {
             restaurantOwnerId: x.restaurantOwnerId,
             beachEmployeeId: x.beachEmployeeId,
             beachOwnerId: x.beachOwnerId,
-            isAdmin: x.isAdmin
+            isAdmin: x.isAdmin,
+            restaurantOwner: x.restaurantOwner === undefined ? null : x.restaurantOwner,
+            restaurantEmployee: x.restaurantEmployee === undefined ? null : x.restaurantEmployee,
+            beachOwner: x.beachOwner === undefined ? null : x.beachOwner,
+            beachEmployee: x.beachEmployee === undefined ? null : x.beachEmployee
           });
           this.setLocalStorage(x);
           this.startTokenTimer();

@@ -138,7 +138,62 @@
 
 
     <p-tabPanel header="Utilisateurs" leftIcon="pi pi-users">
-        Content 3
+      <div class="md:col-10 md:col-offset-1 sm:col-12">
+        <h2>Tous les utilisateurs :</h2>
+          <p-table [value]="users"  scrollHeight="600px" [responsive]="true" [resizableColumns]="true" responsiveLayout="scroll" scrollDirection="both" sortMode="single">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pFrozenColumn pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                    <th p-columnFilter type="text" field="firstname" pSortableColumn="firstname">Prénom <p-sortIcon field="firstname"></p-sortIcon></th>
+                    <th pSortableColumn="lastname">Nom <p-sortIcon field="lastname"></p-sortIcon></th>
+                    <th pSortableColumn="email" >Email <p-sortIcon field="email"></p-sortIcon></th>
+                    <th pSortableColumn="restaurant">Restaurant <p-sortIcon field="restaurant"></p-sortIcon></th>
+                    <th pSortableColumn="beach" >Plage <p-sortIcon field="beach"></p-sortIcon></th>
+                    <th>
+                      Actions
+                      <i class="pi pi-pencil"></i>
+                    </th>
+                </tr>
+                <tr>
+                  <th>
+                  </th>
+                  <th>
+                    <p-columnFilter type="text" field="firstname"></p-columnFilter>
+                  </th>
+                  <th>
+                    <p-columnFilter type="text" field="lastname"></p-columnFilter>
+                  </th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user>
+                <tr>
+                    <td pFrozenColumn>{{user.id}}</td>
+                    <td>{{user.firstname}}</td>
+                    <td>{{user.lastname}}</td>
+                    <td>{{user.email}}</td>
+
+                    <td *ngIf="user.restaurantOwner || user.restaurantEmployee;else aucun">
+                      <button pButton pRipple type="button" [label]="getUserRestaurantName(user)" (click)="goToRestaurantPage(user)" class="p-button-text h-1rem"><i class="pi pi-user"></i></button>
+                    </td>
+                    <ng-template #aucun><td> Aucun</td></ng-template>
+
+                    <td *ngIf="user.beachOwner || user.beachEmployee; else aucun">
+                      <button pButton pRipple type="button" [label]="getUserBeachName(user)" (click)="goToBeachPage(user)" class="p-button-text h-1rem"><i class="pi pi-user"></i></button>
+                    </td>
+                    <ng-template #aucun><td> Aucun</td></ng-template>
+
+                    <td>
+                      <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded mr-2" (click)="editUser(user.id)"></button>
+                      <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteUser(user.id)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+      </div>
     </p-tabPanel>
 </p-tabView>
 </div>

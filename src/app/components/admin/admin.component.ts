@@ -4,6 +4,7 @@ import { Restaurant } from 'src/app/core/models/restaurant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { Router } from '@angular/router';
 import { Beach } from 'src/app/core/models/beach';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-admin',
@@ -15,6 +16,7 @@ export class AdminComponent implements OnInit {
 
   restaurants: Restaurant[] = [];
   beaches: Beach[] = [];
+  users: User[] = [];
 
   generalError = false;
   generalErrorValue = "";
@@ -37,6 +39,7 @@ export class AdminComponent implements OnInit {
   constructor(private api: ApiService, private message: MessageService, private router: Router) {
     this.fetchRestaurant();
     this.fetchBeaches();
+    this.fetchUsers();
   }
 
   ngOnInit(): void {
@@ -131,6 +134,17 @@ export class AdminComponent implements OnInit {
     })
   }
 
+  fetchUsers() {
+    this.api.getAllUsers().subscribe({
+      next: (users) => this.users = users,
+      error: (error) => {
+        if ( error.status == 500 )
+          this.message.add({severity: "error", summary: "Erreur", detail:"Erreur lors de la récupération des utilisateurs"});
+        else this.message.add({severity: "error", summary: "Erreur", detail:"Erreur de communication avec le serveur"});
+      }
+    })
+  }
+
   goToUserPage(id: number) {
     console.log("TODO")
   }
@@ -173,5 +187,39 @@ export class AdminComponent implements OnInit {
         else this.message.add({severity: "error", summary:"Erreur", detail: "Erreur de communication avec le serveur"});
       }
     });
+  }
+
+
+  editUser(id: number) {
+
+  }
+
+
+  deleteUser(id: number) {
+
+  }
+
+  getUserRestaurantName(user: User): string {
+    if ( user.restaurantOwner )
+      return user.restaurantOwner.name + " (Propriétaire)";
+    if ( user.restaurantEmployee )
+      return user.restaurantEmployee.name + " (Employé)";
+    else return "Aucun";
+  }
+
+  getUserBeachName(user: User): string {
+    if ( user.beachOwner )
+      return user.beachOwner.name + " (Propriétaire)";
+    if ( user.beachEmployee )
+      return user.beachEmployee.name + " (Employé)";
+    else return "Aucun";
+  }
+
+  goToRestaurantPage(user: User) {
+    this.router.navigate([`restaurant/${user.restaurantEmployee ? user.restaurantEmployee.id : user.restaurantOwner!.id}/edit`])
+  }
+
+  goToBeachPage(user: User) {
+    this.router.navigate([`beach/${user.beachEmployee ? user.beachEmployee.id : user.beachOwner!.id}/edit`])
   }
 }
