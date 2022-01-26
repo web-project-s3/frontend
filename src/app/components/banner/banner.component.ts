@@ -70,19 +70,7 @@ export class BannerComponent implements OnInit {
     label:'Admin',
     visible: this.auth.isAdmin(),
     icon:'pi pi-fw pi-server',
-    items:[
-      {
-        label:'Restaurants',
-        icon:'pi pi-fw pi-briefcase',
-      },
-      {
-        label:'Plages',
-        icon:'pi pi-fw pi-briefcase'
-      },
-      {
-        label:'Utilisateurs',
-        icon:'pi pi-fw pi-users'
-      }]
+    routerLink: ["/admin"]
   }
 
   loggedOutItem: MenuItem[] = [{
@@ -117,11 +105,12 @@ export class BannerComponent implements OnInit {
         this.logoutItem];
     }
 
-    buildMenu() {
+    buildMenu(user: User | null | undefined) {
 
       if ( this.auth.isLoggedIn() )
       {
         this.logoutItem.visible = true;
+        this.logoutItem.label = user != null ? user.firstname : "Utilisateur";
         this.loggedOutItem[1].visible = false;
         this.loggedOutItem[0].visible = false;
       }
@@ -153,7 +142,7 @@ export class BannerComponent implements OnInit {
     }
 
     onUserChange(user: User | null | undefined) {
-      this.buildMenu();
+      this.buildMenu(user);
       this.ngOnInit();
       if ( user && user.restaurantOwnerId) this.restaurantId = user.restaurantOwnerId;
     }
