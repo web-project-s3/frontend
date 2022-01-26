@@ -16,7 +16,7 @@
     </div>
 
     <div class="p-float-label mt-3 align-content-center align-items-center">
-      <input id="code" pInputText type="text" name="code" [(ngModel)]="this.code" [disabled]="true"/>
+      <input id="code" pInputText type="text" name="code" [(ngModel)]="this.code" [disabled]="!this.auth.isAdmin()"/>
       <label for="code">Code</label>
   </div>
 

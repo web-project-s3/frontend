@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Restaurant } from 'src/app/core/models/restaurant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { TreeNode } from 'primeng/api';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @Component({
@@ -33,7 +34,9 @@ export class RestaurantEditComponent implements OnInit {
   code = "";
   beachCode = "";
 
-  constructor(private router: Router, private route: ActivatedRoute, private api: ApiService) {
+  canChangeCode = false;
+
+  constructor(private router: Router, private route: ActivatedRoute, private api: ApiService, public auth: AuthService) {
     route.paramMap.subscribe({
       next: (value) => {
         const idString = value.get("id");
@@ -54,6 +57,8 @@ export class RestaurantEditComponent implements OnInit {
         }
       }
     })
+
+    auth.user$.subscribe(value => this.canChangeCode = (value != null) && value.isAdmin )
    }
 
   ngOnInit(): void {
@@ -74,7 +79,7 @@ export class RestaurantEditComponent implements OnInit {
 
 
   canSubmit() {
-    return this.name.length > 3 && this.restaurant?.name != this.name;
+    return this.name.length > 3 && ( this.restaurant?.name != this.name || this.restaurant?.code != this.code );
   }
 
   canSumbitBeach() {
@@ -82,32 +87,46 @@ export class RestaurantEditComponent implements OnInit {
   }
 
   onSubmit() {
+    const success = (value: Restaurant) => {
+      this.restaurant!.name = value.name;
+      this.restaurant!.code = value.code;
+      this.loading = false;
+      this.error = false;
+    }
+
+    const error = (error: any) => {
+      this.loading = false;
+      this.error = true;
+      if ( error.status == 400 )
+        this.errorValue = "Le restaurant doit avoir un nom et un code !"
+      else if ( error.status == 404 )
+        this.errorValue = "Impossible de trouver votre restaurant !"
+      else if ( error.status == 409 )
+        this.errorValue = "Le code correspond déjà à un autre établissement !"
+      else if ( error.status == 500 )
+        this.errorValue = "Erreur lors de l'édition du restaurant"
+      else this.errorValue = "Erreur de communication avec le serveur."
+    }
+
     this.loading = true;
-    this.api.patchRestaurant(this.name).subscribe({
-      next: (value) => {
-        this.restaurant!.name = value.name;
-        this.loading = false;
-        this.error = false;
-      },
-      error: (error) => {
-        this.loading = false;
-        this.error = true;
-        if ( error.status == 400 )
-          this.errorValue = "Le restaurant doit avoir un nom !"
-        else if ( error.status == 404 )
-          this.errorValue = "Impossible de trouver votre restaurant !"
-        else if ( error.status == 500 )
-          this.errorValue = "Erreur lors de l'édition du restaurant"
-        else this.errorValue = "Erreur de communication avec le serveur."
-      }
-    })
+
+    if ( !this.auth.isAdmin() )
+      this.api.patchRestaurant(this.name).subscribe({
+        next: success,
+        error: error
+      })
+
+    else
+      this.api.putRestaurant(this.name, this.code, this.restaurant!.id).subscribe({
+        next: success,
+        error: error
+      })
   }
 
   onSubmitBeach() {
     this.beachLoading = true;
     this.api.addBeach(this.restaurant!.id, this.beachCode).subscribe(
       {
-        next: (value) => console.log(value),
         error: (error) => {
           this.beachLoading = false;
           this.beachError = true;

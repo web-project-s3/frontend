@@ -4,6 +4,7 @@ import { Restaurant } from 'src/app/core/models/restaurant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { TreeNode } from 'primeng/api';
 import { Beach } from 'src/app/core/models/beach';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @Component({
@@ -34,7 +35,7 @@ export class BeachEditComponent implements OnInit {
   code = "";
   restaurantCode = "";
 
-  constructor(private router: Router, private route: ActivatedRoute, private api: ApiService) {
+  constructor(private router: Router, private route: ActivatedRoute, private api: ApiService, public auth: AuthService) {
     route.paramMap.subscribe({
       next: (value) => {
         const idString = value.get("id");
@@ -83,32 +84,46 @@ export class BeachEditComponent implements OnInit {
   }
 
   onSubmit() {
+    const success = (value: Restaurant) => {
+      this.beach!.name = value.name;
+      this.beach!.code = value.code;
+      this.loading = false;
+      this.error = false;
+    }
+
+    const error = (error: any) => {
+      this.loading = false;
+      this.error = true;
+      if ( error.status == 400 )
+        this.errorValue = "La plage doit avoir un nom et un code !"
+      else if ( error.status == 404 )
+        this.errorValue = "Impossible de trouver votre plage !"
+      else if ( error.status == 409 )
+        this.errorValue = "Le code correspond déjà à un autre établissement !"
+      else if ( error.status == 500 )
+        this.errorValue = "Erreur lors de l'édition de la plage"
+      else this.errorValue = "Erreur de communication avec le serveur."
+    }
+
     this.loading = true;
-    this.api.patchBeach(this.name).subscribe({
-      next: (value) => {
-        this.beach!.name = value.name;
-        this.loading = false;
-        this.error = false;
-      },
-      error: (error) => {
-        this.loading = false;
-        this.error = true;
-        if ( error.status == 400 )
-          this.errorValue = "La plage doit avoir un nom !"
-        else if ( error.status == 404 )
-          this.errorValue = "Impossible de trouver votre plage !"
-        else if ( error.status == 500 )
-          this.errorValue = "Erreur lors de l'édition de la plage"
-        else this.errorValue = "Erreur de communication avec le serveur."
-      }
-    })
+
+    if ( !this.auth.isAdmin() )
+      this.api.patchBeach(this.name).subscribe({
+        next: success,
+        error: error
+      })
+    else
+      this.api.putBeach(this.name, this.code, this.beach!.id).subscribe({
+        next: success,
+        error: error
+      })
+
   }
 
   onSubmitBeach() {
     this.beachLoading = true;
     this.api.addRestaurant(this.beach!.id, this.restaurantCode).subscribe(
       {
-        next: (value) => console.log(value),
         error: (error) => {
           this.beachLoading = false;
           this.restaurantError = true;

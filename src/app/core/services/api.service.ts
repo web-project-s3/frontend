@@ -55,6 +55,14 @@ export class ApiService {
     return this.http.patch<Beach>(`${this.apiUrl}beaches`, { name });
   }
 
+  putRestaurant(name: string, code: string, id: number) {
+    return this.http.put<Restaurant>(`${this.apiUrl}restaurants/${id}`, { name, code });
+  }
+
+  putBeach(name: string, code: string, id: number) {
+    return this.http.put<Beach>(`${this.apiUrl}beaches/${id}`, { name, code });
+  }
+
   deleteRestaurant(id: number) {
     return this.http.delete(`${this.apiUrl}restaurants/${id}`);
   }

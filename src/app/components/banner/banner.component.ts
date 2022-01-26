@@ -13,6 +13,8 @@ import { Menubar } from 'primeng/menubar';
 })
 export class BannerComponent implements OnInit {
 
+  restaurantId = 0;
+
   logoutItem: MenuItem = {
     label:'Utilisateur',
     icon:'pi pi-fw pi-user',
@@ -102,7 +104,7 @@ export class BannerComponent implements OnInit {
 
   constructor(private auth: AuthService, private router: Router ) {
     this.auth.user$.subscribe({
-      next: (value) => this.onUserChange()
+      next: (value) => this.onUserChange(value)
     })
   }
 
@@ -150,12 +152,13 @@ export class BannerComponent implements OnInit {
       this.adminItem.visible = this.auth.isAdmin();
     }
 
-    onUserChange() {
+    onUserChange(user: User | null | undefined) {
       this.buildMenu();
-      this.ngOnInit()
+      this.ngOnInit();
+      if ( user && user.restaurantOwnerId) this.restaurantId = user.restaurantOwnerId;
     }
 
     goToRestaurantEditPage() {
-      this.router.navigate(["/restaurant/1/edit"])
+      this.router.navigate(["/restaurant/" + this.restaurantId + "/edit"]);
     }
 }
