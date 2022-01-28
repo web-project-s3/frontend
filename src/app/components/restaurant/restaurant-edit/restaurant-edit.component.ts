@@ -4,6 +4,7 @@ import { Restaurant } from 'src/app/core/models/restaurant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { TreeNode } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Beach } from 'src/app/core/models/beach';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class RestaurantEditComponent implements OnInit {
 
+  partners: Beach[] = [];
   restaurant: Restaurant | null = null;
 
   employeesNode: TreeNode[] = [];
@@ -50,7 +52,6 @@ export class RestaurantEditComponent implements OnInit {
           this.api.getRestaurantId(id).subscribe({
             next: this.onRestaurantLoad.bind(this),
             error:(error) =>  {
-              console.log(error.message);
               this.router.navigate(["/home"]);
             }
           })
@@ -65,6 +66,7 @@ export class RestaurantEditComponent implements OnInit {
   }
 
   onRestaurantLoad(restaurant: Restaurant){
+    this.partners = restaurant.partners;
     this.restaurant = restaurant;
     this.name = restaurant.name;
     this.code = restaurant.code;
@@ -127,6 +129,16 @@ export class RestaurantEditComponent implements OnInit {
     this.beachLoading = true;
     this.api.addBeach(this.restaurant!.id, this.beachCode).subscribe(
       {
+        next: (value) => {
+          this.api.getRestaurantId(this.restaurant!.id).subscribe({
+            next: this.onRestaurantLoad.bind(this),
+            error:(error) =>  {
+              this.router.navigate(["/home"]);
+            }});
+
+          this.loading = false;
+          this.error = false;
+        },
         error: (error) => {
           this.beachLoading = false;
           this.beachError = true;
@@ -140,6 +152,19 @@ export class RestaurantEditComponent implements OnInit {
         }
       }
     )
+  }
+
+  deletePartner(id: number){
+    this.api.deletePartnerRestaurant(this.restaurant!.id, id).subscribe({
+      next: (value) => {
+        this.partners = this.partners.filter(beach => beach.id != id);
+      },
+      error: console.log
+    })
+  }
+
+  editPartner(id: number){
+    this.router.navigate([`beach/${id}/edit`]);
   }
 
 }

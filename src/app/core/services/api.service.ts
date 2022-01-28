@@ -95,6 +95,14 @@ export class ApiService {
     return this.http.post<any>(`${this.apiUrl}beaches/${beachId}/restaurant`, { code: codeRestaurant });
   }
 
+  deletePartnerRestaurant(restaurantId: number, beachId:number) {
+    return this.http.delete(`${this.apiUrl + "restaurants/" + restaurantId}/beach/${beachId}`);
+  }
+
+  deletePartnerBeach(restaurantId: number, beachId:number) {
+    return this.http.delete(`${this.apiUrl + "beaches/" + beachId}/restaurant/${restaurantId}`);
+  }
+
   createRestaurant(name: string, ownerEmail: string) {
     return this.http.post<Restaurant>(`${this.apiUrl}restaurants/`, { restaurantName: name, ownerEmail });
   }

@@ -166,7 +166,7 @@ export class AdminComponent implements OnInit {
   }
 
   editBeach(id: number) {
-    this.router.navigate([`beaches/${id}/edit`]);
+    this.router.navigate([`beach/${id}/edit`]);
   }
 
   deleteBeach(id: number) {

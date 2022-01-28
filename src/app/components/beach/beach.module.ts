@@ -10,6 +10,7 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
     MessagesModule,
     FormsModule,
     InputTextModule,
+    TableModule,
     BeachRoutingModule
   ]
 })

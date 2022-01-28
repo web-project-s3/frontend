@@ -75,3 +75,32 @@
   </div>
 </div>
 
+<p-divider></p-divider>
+
+<div>
+  <div class="col-10 col-offset-1">
+    <h2>Vos partenaires :</h2>
+      <p-table [value]="partners" scrollHeight="flex" responsiveLayout="scroll" sortMode="single">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="name">Nom <p-sortIcon field="name"></p-sortIcon></th>
+                <th>
+                  Actions
+                  <i class="pi pi-pencil"></i>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-restaurant>
+            <tr>
+                <td>{{restaurant.id}}</td>
+                <td>{{restaurant.name}}</td>
+                <td>
+                  <button *ngIf="this.auth.isAdmin()" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded mr-2" (click)="editPartner(restaurant.id)"></button>
+                  <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deletePartner(restaurant.id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+</div>

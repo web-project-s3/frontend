@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class BeachEditComponent implements OnInit {
 
+  partners: Restaurant[] = [];
   beach: Beach | null = null;
 
   employeesNode: TreeNode[] = [];
@@ -34,6 +35,8 @@ export class BeachEditComponent implements OnInit {
   name = "";
   code = "";
   restaurantCode = "";
+
+  canChangeCode = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private api: ApiService, public auth: AuthService) {
     route.paramMap.subscribe({
@@ -56,12 +59,15 @@ export class BeachEditComponent implements OnInit {
         }
       }
     })
+
+    auth.user$.subscribe(value => this.canChangeCode = (value != null) && value.isAdmin )
    }
 
   ngOnInit(): void {
   }
 
   onBeachLoad(beach: Beach){
+    this.partners = beach.partners;
     this.beach = beach;
     this.name = beach.name;
     this.code = beach.code;
@@ -76,7 +82,7 @@ export class BeachEditComponent implements OnInit {
 
 
   canSubmit() {
-    return this.name.length > 3 && this.beach?.name != this.name;
+    return this.name.length > 3 && ( this.beach?.name != this.name || this.beach?.code != this.code );
   }
 
   canSumbitRestaurant() {
@@ -124,6 +130,16 @@ export class BeachEditComponent implements OnInit {
     this.beachLoading = true;
     this.api.addRestaurant(this.beach!.id, this.restaurantCode).subscribe(
       {
+        next: (value) => {
+        this.api.getBeachId(this.beach!.id).subscribe({
+          next: this.onBeachLoad.bind(this),
+          error:(error) =>  {
+            this.router.navigate(["/home"]);
+          }});
+
+        this.loading = false;
+        this.error = false;
+      },
         error: (error) => {
           this.beachLoading = false;
           this.restaurantError = true;
@@ -137,6 +153,19 @@ export class BeachEditComponent implements OnInit {
         }
       }
     )
+  }
+
+  deletePartner(id: number){
+    this.api.deletePartnerBeach(id, this.beach!.id ).subscribe({
+      next: (value) => {
+        this.partners = this.partners.filter(restaurant => restaurant.id != id);
+      },
+      error: console.log
+    })
+  }
+
+  editPartner(id: number){
+    this.router.navigate([`restaurant/${id}/edit`]);
   }
 
 }
