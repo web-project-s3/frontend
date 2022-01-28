@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './core/guards/admin.guard';
 import { AuthGuard } from './core/guards/auth.guard';
+import { BeachOwnerGuard } from './core/guards/beach-owner.guard';
 import { RestaurantOwnerGuard } from './core/guards/restaurant-owner.guard';
 
 const routes: Routes = [
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path: 'restaurant',  loadChildren: () => import ("./components/restaurant/restaurant.module").then(m => m.RestaurantModule),
   canActivate: [RestaurantOwnerGuard]},
   { path: 'beach',  loadChildren: () => import ("./components/beach/beach.module").then(m => m.BeachModule),
-  canActivate: [RestaurantOwnerGuard]},
+  canActivate: [BeachOwnerGuard]},
   { path: 'admin',  loadChildren: () => import ("./components/admin/admin.module").then(m => m.AdminModule),
   canActivate: [AdminGuard]},
   { path: 'user',  loadChildren: () => import ("./components/user/user.module").then(m => m.UserModule),

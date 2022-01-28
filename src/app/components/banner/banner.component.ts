@@ -14,6 +14,7 @@ import { Menubar } from 'primeng/menubar';
 export class BannerComponent implements OnInit {
 
   restaurantId = 0;
+  beachId = 0;
 
   logoutItem: MenuItem = {
     label:'Utilisateur',
@@ -22,7 +23,8 @@ export class BannerComponent implements OnInit {
     items:[
       {
         label:'Édition du profil',
-        icon:'pi pi-fw pi-pencil'
+        icon:'pi pi-fw pi-pencil',
+        command: this.goToUserEditPage.bind(this)
       },
       {
         label:'Déconnexion',
@@ -59,6 +61,7 @@ export class BannerComponent implements OnInit {
       {
         label:'Édition de la plage',
         icon:'pi pi-fw pi-pencil',
+        command: this.goToBeachEditPage.bind(this)
       },
       {
         label:'Commandes',
@@ -145,9 +148,18 @@ export class BannerComponent implements OnInit {
       this.buildMenu(user);
       this.ngOnInit();
       if ( user && user.restaurantOwnerId) this.restaurantId = user.restaurantOwnerId;
+      if ( user && user.beachOwnerId ) this.beachId = user.beachOwnerId
     }
 
     goToRestaurantEditPage() {
       this.router.navigate(["/restaurant/" + this.restaurantId + "/edit"]);
+    }
+
+    goToBeachEditPage()  {
+      this.router.navigate(["/beach/" + this.beachId + "/edit"]);
+    }
+
+    goToUserEditPage() {
+      this.router.navigate(["/user/" + this.auth._user.getValue()?.id + "/edit"]);
     }
 }

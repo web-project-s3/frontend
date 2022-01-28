@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { map } from 'rxjs';
 
@@ -14,8 +14,10 @@ export class BeachOwnerGuard implements CanActivate
   canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ):
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
     {
-    return this.authService.user$.pipe(map((user) => {
-        if (user && ( user.beachOwnerId || user.isAdmin ))
+    return this.authService.user$.pipe(
+      filter(user => user !== undefined),
+      map((user) => {
+        if (user && ( user.beachOwnerId != null || user.isAdmin ))
           return true;
         else
         {
