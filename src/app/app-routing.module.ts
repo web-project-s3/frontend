@@ -15,7 +15,9 @@ const routes: Routes = [
   { path: 'beach',  loadChildren: () => import ("./components/beach/beach.module").then(m => m.BeachModule),
   canActivate: [RestaurantOwnerGuard]},
   { path: 'admin',  loadChildren: () => import ("./components/admin/admin.module").then(m => m.AdminModule),
-  canActivate: [AdminGuard]}
+  canActivate: [AdminGuard]},
+  { path: 'user',  loadChildren: () => import ("./components/user/user.module").then(m => m.UserModule),
+  canActivate: [AuthGuard]}
 ];
 
 @NgModule({

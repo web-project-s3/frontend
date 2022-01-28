@@ -39,6 +39,10 @@ export class ApiService {
     return this.http.get<Beach>(`${this.apiUrl}beaches/${id}`);
   }
 
+  getUserId(id: number) {
+    return this.http.get<User>(`${this.apiUrl}users/${id}`);
+  }
+
   getAllRestaurants() {
     return this.http.get<Restaurant[]>(`${this.apiUrl}restaurants`)
   }
@@ -59,12 +63,20 @@ export class ApiService {
     return this.http.patch<Beach>(`${this.apiUrl}beaches`, { name });
   }
 
+  patchUser(id: number, firstname: string, lastname: string ) {
+    return this.http.patch<User>(`${this.apiUrl}users/${id}`, { firstname, lastname, password: null });
+  }
+
   putRestaurant(name: string, code: string, id: number) {
     return this.http.put<Restaurant>(`${this.apiUrl}restaurants/${id}`, { name, code });
   }
 
   putBeach(name: string, code: string, id: number) {
     return this.http.put<Beach>(`${this.apiUrl}beaches/${id}`, { name, code });
+  }
+
+  putUser(id: number, firstname: string, lastname: string, email: string, isAdmin: boolean ) {
+    return this.http.put<User>(`${this.apiUrl}users/${id}`, { firstname, lastname, email, isAdmin});
   }
 
   deleteRestaurant(id: number) {
@@ -89,5 +101,9 @@ export class ApiService {
 
   createBeach(name: string, ownerEmail: string) {
     return this.http.post<Beach>(`${this.apiUrl}beaches/`, { beachName: name, ownerEmail });
+  }
+
+  removeEmployer(userId: number) {
+    return this.http.delete<User>(`${this.apiUrl}users/${userId}/removeEmployer`);
   }
 }

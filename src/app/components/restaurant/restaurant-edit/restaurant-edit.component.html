@@ -18,7 +18,7 @@
     <div class="p-float-label mt-3 align-content-center align-items-center">
       <input id="code" pInputText type="text" name="code" [(ngModel)]="this.code" [disabled]="!this.auth.isAdmin()"/>
       <label for="code">Code</label>
-  </div>
+    </div>
 
     <div class="mt-4 ml-1">
       <p-button [loading]="loading" [disabled]="!canSubmit()" label="Enregister" icon="pi pi-check" iconPos="right" (onClick)="onSubmit()"></p-button>

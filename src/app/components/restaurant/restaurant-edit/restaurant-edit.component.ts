@@ -17,7 +17,7 @@ export class RestaurantEditComponent implements OnInit {
 
   employeesNode: TreeNode[] = [];
   cols = [
-    { field: 'Nom', header: 'Prénom' },
+    { field: 'firstname', header: 'Prénom' },
     { field: 'lastname', header: 'Nom' },
   ];
 

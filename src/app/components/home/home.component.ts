@@ -19,9 +19,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.auth.user$.subscribe({
-      next: this.onUserChange
-    })
+    this.onUserChange(this.auth._user.getValue())
   }
 
   onUserChange(user: User | null | undefined) {

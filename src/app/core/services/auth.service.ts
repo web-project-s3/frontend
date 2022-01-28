@@ -101,6 +101,10 @@ export class AuthService implements OnDestroy {
     this.router.navigate(['login']);
   }
 
+  reloadUser() {
+    this.refreshToken();
+  }
+
   refreshToken(): Observable<LoginResult | null> {
     const refreshToken = localStorage.getItem('refresh_token');
     if (!refreshToken) {

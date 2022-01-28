@@ -1,0 +1,51 @@
+<div class="grid card">
+  <div class="col-12 flex justify-content-center text-5xl mt-5">
+    {{this.user?.firstname}}
+  </div>
+</div>
+<p-divider class="mx-8"></p-divider>
+
+<div class="grid card align-content-center justify-content-center align-items-center">
+  <div class="px-8 flex-column p-card-content grid align-items-center align-content-center">
+    <div *ngIf="this.error" class="col-12">
+      <p-message severity="error" [text]="errorValue"></p-message>
+    </div>
+    <div class="p-float-label mt-3 align-content-center align-items-center">
+        <input id="firstname" pInputText type="text" name="name" [(ngModel)]="this.firstname" />
+        <label for="firstname">Prénom</label>
+    </div>
+
+    <div class="p-float-label mt-3 align-content-center align-items-center">
+      <input id="lastname" pInputText type="text" name="code" [(ngModel)]="this.lastname" />
+      <label for="lastname">Nom</label>
+    </div>
+
+    <div class="p-float-label mt-3 align-content-center align-items-center">
+      <input id="email" pInputText type="text" name="email" [(ngModel)]="this.email" [disabled]="true" />
+      <label for="email">Email</label>
+    </div>
+
+    <div *ngIf="this.auth.isAdmin()" class="field-checkbox mt-3">
+      <p-checkbox [(ngModel)]="isAdmin" [binary]="true" inputId="isAdmin"></p-checkbox>
+      <label for="isAdmin">Admin</label>
+    </div>
+
+    <p-divider></p-divider>
+
+    <div *ngIf="worksFor != null" class="flex align-content-center align-items-center mt-4">
+      <h2>Vous êtes rattaché à {{worksFor?.name}}</h2>
+      <div class="ml-4">
+        <button pButton pRipple [loading]="loading" label="Se détacher" icon="pi pi-trash" iconPos="right" class="p-button-danger" (click)="onSubmitDetach()"></button>
+      </div>
+    </div>
+
+    <p-divider *ngIf="worksFor != null"></p-divider>
+
+    <div class="mt-4 ml-1">
+      <button pButton pRipple [loading]="loading" [disabled]="!canSubmit()" label="Enregister" icon="pi pi-check" iconPos="right" (click)="onSubmit()"></button>
+    </div>
+  </div>
+</div>
+
+<p-divider class="mx-8"></p-divider>
+

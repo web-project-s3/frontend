@@ -55,7 +55,7 @@
                       <td>{{restaurant.name}}</td>
                       <td>{{restaurant.code}}</td>
                       <td>
-                        <button pButton pRipple type="button" [label]="restaurant.owner.id" (click)="goToUserPage(restaurant.owner.id)" class="p-button-text h-1rem"><i class="pi pi-user"></i></button>
+                        <button pButton pRipple type="button" [label]="restaurant.owner.id" (click)="editUser(restaurant.owner.id)" class="p-button-text h-1rem"><i class="pi pi-user"></i></button>
                       </td>
                       <td>{{restaurant.employees.length}}</td>
                       <td>
@@ -121,7 +121,7 @@
                       <td>{{beach.name}}</td>
                       <td>{{beach.code}}</td>
                       <td>
-                        <button pButton pRipple type="button" [label]="beach.owner.id" (click)="goToUserPage(beach.owner.id)" class="p-button-text h-1rem"><i class="pi pi-user"></i></button>
+                        <button pButton pRipple type="button" [label]="beach.owner.id" (click)="editUser(beach.owner.id)" class="p-button-text h-1rem"><i class="pi pi-user"></i></button>
                       </td>
                       <td>{{beach.employees.length}}</td>
                       <td>

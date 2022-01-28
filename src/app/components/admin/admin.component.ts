@@ -145,10 +145,6 @@ export class AdminComponent implements OnInit {
     })
   }
 
-  goToUserPage(id: number) {
-    console.log("TODO")
-  }
-
   editRestaurant(id: number) {
     this.router.navigate([`restaurant/${id}/edit`]);
   }
@@ -191,7 +187,7 @@ export class AdminComponent implements OnInit {
 
 
   editUser(id: number) {
-
+    this.router.navigate([`user/${id}/edit`])
   }
 
 
