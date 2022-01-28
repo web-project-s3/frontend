@@ -56,6 +56,10 @@ export class ApiService {
     return this.http.get<User[]>(`${this.apiUrl}users`)
   }
 
+  getAllProductsOfBeach(beachId: number) {
+    return this.http.get<Product[]>(`${this.apiUrl}beaches/${beachId}/product`);
+  }
+
   patchRestaurant(name: string) {
     return this.http.patch<Restaurant>(`${this.apiUrl}restaurants`, { name });
   }

@@ -60,6 +60,7 @@
                       <td>{{restaurant.employees.length}}</td>
                       <td>
                         <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded mr-2" (click)="editRestaurant(restaurant.id)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-tags" class="p-button-rounded mr-2" (click)="editRestaurantsProduct(restaurant.id)"></button>
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteRestaurant(restaurant.id)"></button>
                       </td>
                   </tr>
@@ -126,6 +127,7 @@
                       <td>{{beach.employees.length}}</td>
                       <td>
                         <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded mr-2" (click)="editBeach(beach.id)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-tags" class="p-button-rounded mr-2" (click)="editBeachesProduct(beach.id)"></button>
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteBeach(beach.id)"></button>
                       </td>
                   </tr>

@@ -84,7 +84,7 @@ export class RestaurantProductComponent implements OnInit {
     )
   }
 
-  test(event: any){
+  onPriceInput(event: any){
     this.price = event.value;
   }
 

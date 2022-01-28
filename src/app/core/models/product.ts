@@ -9,4 +9,5 @@ export class Product {
   declare restaurantId: number;
   declare restaurant: Restaurant;
   declare beaches: Beach[];
+  declare BeachProduct: { price: number } | null | undefined;
 }

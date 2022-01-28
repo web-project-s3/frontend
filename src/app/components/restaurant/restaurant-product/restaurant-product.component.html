@@ -71,7 +71,7 @@
       <p-dropdown [options]="this.restaurant!.products" [(ngModel)]="selectedProduct" placeholder="Choissisez le produit" optionLabel="name" [showClear]="true" [disabled]="this.selectedPartner == null"></p-dropdown>
     </div>
     <div class="mt-1">
-      <p-inputNumber [(ngModel)]="this.price" (onInput)="test($event)" mode="currency" inputId="currency-france" currency="EUR" [disabled]="this.selectedProduct == null">
+      <p-inputNumber [(ngModel)]="this.price" (onInput)="onPriceInput($event)" mode="currency" inputId="currency-france" currency="EUR" [disabled]="this.selectedProduct == null">
       </p-inputNumber>
     </div>
     <div class="mt-4 ml-1">

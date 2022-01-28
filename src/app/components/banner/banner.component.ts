@@ -46,6 +46,7 @@ export class BannerComponent implements OnInit {
       {
         label:'Produits',
         icon:'pi pi-fw pi-tag',
+        command: this.goToRestaurantProductPage.bind(this)
       },
       {
         label:'Commandes',
@@ -62,6 +63,11 @@ export class BannerComponent implements OnInit {
         label:'Édition de la plage',
         icon:'pi pi-fw pi-pencil',
         command: this.goToBeachEditPage.bind(this)
+      },
+      {
+        label:'Produits',
+        icon:'pi pi-fw pi-tag',
+        command: this.goToBeachProductPage.bind(this)
       },
       {
         label:'Commandes',
@@ -86,7 +92,7 @@ export class BannerComponent implements OnInit {
     label:'Créer un compte',
     visible: !this.auth.isLoggedIn(),
     icon:'pi pi-fw pi-user',
-    routerLink: "/register"
+    routerLink: "/register",
   }]
 
 
@@ -155,8 +161,16 @@ export class BannerComponent implements OnInit {
       this.router.navigate(["/restaurant/" + this.restaurantId + "/edit"]);
     }
 
+    goToRestaurantProductPage() {
+      this.router.navigate(["/restaurant/" + this.restaurantId + "/product"]);
+    }
+
     goToBeachEditPage()  {
       this.router.navigate(["/beach/" + this.beachId + "/edit"]);
+    }
+
+    goToBeachProductPage()  {
+      this.router.navigate(["/beach/" + this.beachId + "/product"]);
     }
 
     goToUserEditPage() {
