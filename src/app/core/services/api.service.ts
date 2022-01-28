@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Beach } from '../models/beach';
+import { Product } from '../models/product';
 import { Restaurant } from '../models/restaurant';
 import { User } from '../models/user';
 import { AuthService } from './auth.service';
@@ -103,6 +104,10 @@ export class ApiService {
     return this.http.delete(`${this.apiUrl + "beaches/" + beachId}/restaurant/${restaurantId}`);
   }
 
+  deleteProduct(productId: number) {
+    return this.http.delete(`${this.apiUrl}products/${productId}`);
+  }
+
   createRestaurant(name: string, ownerEmail: string) {
     return this.http.post<Restaurant>(`${this.apiUrl}restaurants/`, { restaurantName: name, ownerEmail });
   }
@@ -111,7 +116,19 @@ export class ApiService {
     return this.http.post<Beach>(`${this.apiUrl}beaches/`, { beachName: name, ownerEmail });
   }
 
+  createNewProduct(restaurantId: number, name: string, imageUrl: string) {
+    return this.http.post<Product>(`${this.apiUrl}restaurants/${restaurantId}/product`, { name, imageUrl });
+  }
+
   removeEmployer(userId: number) {
     return this.http.delete<User>(`${this.apiUrl}users/${userId}/removeEmployer`);
+  }
+
+  publishProductToBeach(restaurantId: number, beachId: number, productId: number, price: number) {
+    return this.http.put(`${this.apiUrl}restaurants/${restaurantId}/product/${productId}/beach/${beachId}`, {price});
+  }
+
+  deleteProductFromBeach(restaurantId: number, beachId: number, productId: number) {
+    return this.http.delete(`${this.apiUrl}restaurants/${restaurantId}/product/${productId}/beach/${beachId}`);
   }
 }

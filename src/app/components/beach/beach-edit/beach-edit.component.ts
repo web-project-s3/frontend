@@ -90,7 +90,7 @@ export class BeachEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const success = (value: Restaurant) => {
+    const success = (value: Beach) => {
       this.beach!.name = value.name;
       this.beach!.code = value.code;
       this.loading = false;

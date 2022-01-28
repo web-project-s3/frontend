@@ -65,7 +65,7 @@ export class RestaurantEditComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onRestaurantLoad(restaurant: Restaurant){
+  onRestaurantLoad(restaurant: Restaurant) {
     this.partners = restaurant.partners;
     this.restaurant = restaurant;
     this.name = restaurant.name;

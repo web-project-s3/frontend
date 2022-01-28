@@ -1,0 +1,126 @@
+<div class="grid card">
+  <div class="col-12 flex justify-content-center text-5xl mt-5">
+    {{this.restaurant?.name}}
+  </div>
+</div>
+
+<p-divider class="mx-8"></p-divider>
+
+<div class="grid card align-content-center justify-content-center align-items-center">
+  <div class="px-8 flex-column p-card-content grid align-items-center align-content-center">
+    <div *ngIf="this.error" class="col-12">
+      <p-message severity="error" [text]="errorValue"></p-message>
+    </div>
+    <h2>Créer un nouveau produit</h2>
+    <div class="p-float-label mt-3 align-content-center align-items-center">
+        <input id="name" pInputText type="text" name="name" [(ngModel)]="this.productName" />
+        <label for="name">Nom</label>
+    </div>
+
+    <div class="p-float-label mt-3 align-content-center align-items-center">
+      <input id="productURL" pInputText type="text" name="productURL" [(ngModel)]="this.productURL"/>
+      <label for="productURL">URL Image</label>
+    </div>
+
+    <div class="mt-4 ml-1">
+      <p-button [loading]="this.loading" [disabled]="!canSubmitNewProduct()" label="Enregister" icon="pi pi-check" iconPos="right" (onClick)="onSubmitNewProduct()"></p-button>
+    </div>
+  </div>
+</div>
+
+<p-divider class="mx-8"></p-divider>
+
+<div>
+  <div class="col-10 col-offset-1">
+    <h2>Vos produits :</h2>
+      <p-table [value]="this.restaurant!.products" scrollHeight="flex" responsiveLayout="scroll" sortMode="single">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="name">Nom <p-sortIcon field="name"></p-sortIcon></th>
+                <th>
+                  Actions
+                  <i class="pi pi-pencil"></i>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.id}}</td>
+                <td>{{product.name}}</td>
+                <td>
+                  <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProduct(product.id)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-divider class="mx-8"></p-divider>
+
+<div class="grid card align-content-center justify-content-center align-items-center">
+  <div *ngIf="this.errorPublish" class="col-12">
+    <p-message severity="error" [text]="errorPublishValue"></p-message>
+  </div>
+  <div class="px-8 flex-column p-card-content grid align-items-center align-content-center">
+    <div class="mt-1">
+      <p-dropdown [options]="this.restaurant!.partners" [(ngModel)]="selectedPartner" placeholder="Choisissez le partenaire" optionLabel="name" [showClear]="true"></p-dropdown>
+    </div>
+    <div class="mt-1">
+      <p-dropdown [options]="this.restaurant!.products" [(ngModel)]="selectedProduct" placeholder="Choissisez le produit" optionLabel="name" [showClear]="true" [disabled]="this.selectedPartner == null"></p-dropdown>
+    </div>
+    <div class="mt-1">
+      <p-inputNumber [(ngModel)]="this.price" (onInput)="test($event)" mode="currency" inputId="currency-france" currency="EUR" [disabled]="this.selectedProduct == null">
+      </p-inputNumber>
+    </div>
+    <div class="mt-4 ml-1">
+      <p-button [loading]="this.loading" [disabled]="!canPublishProduct()" label="Enregister" icon="pi pi-check" iconPos="right" (onClick)="onPublishProduct()"></p-button>
+    </div>
+  </div>
+</div>
+<p-divider class="mx-8"></p-divider>
+
+
+<div>
+  <div class="col-10 col-offset-1">
+    <h2>Vos produits exposés à vos partenaires : vous pouvez éditez les prix directement dans le tableau</h2>
+    <p-table [value]="products" sortField="beach.name" sortMode="single" dataKey="beach.id" rowGroupMode="subheader" groupRowsBy="beach.name" scrollHeight="flex" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nom</th>
+                <th>ID Produit</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="groupheader" let-product let-rowIndex="rowIndex" let-expanded="expanded">
+            <tr>
+              <td colspan="5">
+                <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain mr-2" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                <span class="font-bold ml-2">{{product.beach.name}}</span>
+              </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-product>
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.id}}</td>
+                <td pEditableColumn>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <input pInputText [(ngModel)]="product.price" type="number" (keydown)="onProductPriceKeyUp($event, product)" (change)="onProductPriceEdit(product)">
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{product.price | currency:"EUR"}}
+                      </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                  <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProductFromBeach(product)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+  </div>
+</div>

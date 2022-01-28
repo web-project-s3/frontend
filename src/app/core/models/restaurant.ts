@@ -1,4 +1,5 @@
 import { Beach } from "./beach";
+import { Product } from "./product";
 import { User } from "./user";
 
 export class Restaurant {
@@ -8,4 +9,5 @@ export class Restaurant {
   declare owner: User | null;
   declare employees: User[];
   declare partners: Beach[];
+  products: Product[] = [];
 }

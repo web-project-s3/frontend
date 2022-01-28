@@ -1,7 +1,8 @@
-html {
+body {
   background-color: var(--surface-b);
   font-family: var(--font-family);
   color: var(--text-color);
+  min-height: 2000vh;
 }
 
 :host ::ng-deep .p-menubar {

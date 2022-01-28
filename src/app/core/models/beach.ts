@@ -8,4 +8,5 @@ export class Beach {
   declare owner: User | null;
   declare employees: User[];
   declare partners: Restaurant[];
+  declare pricing: { price: number } | null | undefined;
 }
