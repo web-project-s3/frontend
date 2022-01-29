@@ -1,10 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Socketio } from "ngx-socketio2";
 import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
-import { map, tap, delay, filter } from 'rxjs/operators';
-import { User } from '../models/user';
+import { delay, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/user';
 
 interface LoginResult extends User{
   accessToken: string;
@@ -65,6 +66,12 @@ export class AuthService implements OnDestroy {
     {
       email, firstname, lastname, password
     });
+  }
+
+  registerSocket(socket: Socketio, beachId: number | null, restaurantId: number | null) {
+    const accessToken = localStorage.getItem("access_token");
+    if ( accessToken )
+      socket.emit("register", { accessToken, beachId, restaurantId });
   }
 
   login(email: string, password: string) {

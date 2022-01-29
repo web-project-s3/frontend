@@ -1,0 +1,103 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Socketio } from "ngx-socketio2";
+import { ConfirmationService } from 'primeng/api';
+import { Order } from 'src/app/core/models/order';
+import { Product } from 'src/app/core/models/product';
+import { Restaurant } from 'src/app/core/models/restaurant';
+import { ApiService } from 'src/app/core/services/api.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+
+@Component({
+  selector: 'app-restaurant-orders',
+  templateUrl: './restaurant-orders.component.html',
+  styleUrls: ['./restaurant-orders.component.scss'],
+  providers: [ConfirmationService]
+})
+export class RestaurantOrdersComponent implements OnInit {
+
+  restaurant: Restaurant | null = null;
+  orders: Order[];
+
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute, private api: ApiService, private socket: Socketio, private confirmation: ConfirmationService) {
+    route.paramMap.subscribe({
+      next: (value) =>
+      {
+        const idString = value.get("id");
+        if ( !idString || isNaN(parseInt(idString)))
+          router.navigate(["/home"]);
+
+        else
+        {
+          const id = parseInt(idString);
+          this.loadRestaurant(id);
+        }
+      }
+    });
+
+    this.orders = [];
+    this.updateTimeElapsed();
+  }
+
+  loadRestaurant(id: number) {
+    this.api.getRestaurantId(id).subscribe(
+      {
+        next: this.onRestaurantLoad.bind(this),
+        error:(error) => this.router.navigate(["/home"])
+      });
+  }
+
+  onRestaurantLoad(restaurant: Restaurant) {
+    this.socket.on<Order[]>("activeOrders").subscribe(this.activeOrdersHandler.bind(this));
+    this.auth.registerSocket(this.socket, null, restaurant.id);
+    this.restaurant = restaurant;
+  }
+
+  activeOrdersHandler(orders: Order[]) {
+    this.orders = orders;
+  }
+
+  updateTimeElapsed() {
+    this.orders.forEach(order => {
+      let seconds = (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000;
+      const minutes = Math.floor(seconds / 60);
+      seconds = seconds % 60;
+      order.timeElapsed = minutes == 0 ? `${seconds}s` : `${minutes}m ${seconds.toFixed(0)}s`;
+    })
+
+    setTimeout(this.updateTimeElapsed.bind(this), 1000);
+  }
+
+  test(product: Product & { details: { ready: boolean, quantity: number } }) {
+    product.details.ready = !product.details.ready;
+  }
+
+  confirmValidateAll(order: Order) {
+    this.confirmation.confirm({
+      message: 'Tout valider ?',
+      acceptLabel: "Oui",
+      rejectLabel: "Non",
+      accept: () => {
+
+
+
+      }
+    });
+  }
+
+  confirmOrderSent(order: Order) {
+    this.confirmation.confirm({
+      message: 'Commande envoyée ?',
+      acceptLabel: "Oui",
+      rejectLabel: "Non",
+      accept: () => {
+
+
+
+      }
+   });
+  }
+
+  ngOnInit(): void {
+  }
+}

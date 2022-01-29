@@ -12,10 +12,11 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { BeachProductComponent } from './beach-product/beach-product.component';
+import { BeachOrdersComponent } from './beach-orders/beach-orders.component';
 
 
 @NgModule({
-  declarations: [BeachEditComponent, BeachProductComponent],
+  declarations: [BeachEditComponent, BeachProductComponent, BeachOrdersComponent],
   imports: [
     CommonModule,
     TreeTableModule,
