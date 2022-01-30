@@ -1,1 +1,65 @@
-<p>beach-orders works!</p>
+
+<p-tabView>
+  <!-- Commande en cours -->
+  <p-tabPanel header="Commande en cours">
+    <div class="grid m-4 ">
+      <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+      <div *ngFor="let order of this.orders" class="col-6">
+        <p-card [header]="'Par ' + order.user.firstname" [subheader]="'Il y a ' + order.timeElapsed">
+          <ng-template pTemplate="content">
+            <div *ngIf="order.note" class="mb-4">
+              Note : {{order.note}}
+            </div>
+            <div *ngFor="let product of order.contains">
+              <div>
+                {{product.name}} ({{product.restaurant.name}})
+                <p-badge [value]="'' + product.details.quantity" [severity]="product.details.ready ? 'success' : 'danger'" styleClass="ml-2"></p-badge>
+                <p-badge *ngIf="!product.details.ready && !product.details.sent" [severity]="'warning'" styleClass="ml-2" value="En préparation"></p-badge>
+                <p-badge *ngIf="product.details.ready && !product.details.sent" [severity]="'info'" styleClass="ml-2" value="Prêt"></p-badge>
+                <p-badge *ngIf="product.details.sent" [severity]="'success'" styleClass="ml-2" value="Envoyé"></p-badge>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <button label="Commande reçu" icon="pi pi-send" class="p-button-danger mb-2" (click)="confirmOrderReceived(order)" pButton></button>
+          </ng-template>
+          </p-card>
+        </div>
+    </div>
+  </p-tabPanel>
+
+  <!-- Nouvelle commande -->
+  <p-tabPanel header="Nouvelle commande">
+    <div class="grid align-items-center justify-content-center">
+      <div class="flex flex-column align-items-center">
+        <p-dropdown [options]="availableProducts" [(ngModel)]="selectedProduct" optionLabel="name" [showClear]="true" placeholder="Sélectionner un produit" class="mr-2 mb-2"></p-dropdown>
+        <p-inputNumber [(ngModel)]="quantity" [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" class="mr-2 mb-2" [min]="0"
+        incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+        </p-inputNumber>
+        <button label="Ajouter" icon="pi pi-plus" class="mb-2" (click)="addProductToOrder()" [disabled]="!this.selectedProduct" pButton></button>
+      </div>
+
+      <p-divider class="col-12"></p-divider>
+
+      <div class="align-items-center">
+        <div class="align-items-center justify-content-center">
+          <h2>Votre commande :</h2>
+        </div>
+        <div *ngFor="let product of this.selectedProducts; let i = index " class="mb-4 flex align-items-center">
+          {{product.name}} ({{product.restaurant.name}}) :
+          <p-badge [severity]="'info'" styleClass="mx-2" [value]="'' + product.details.quantity"></p-badge>
+          <button icon="pi pi-trash" class="p-button-danger" (click)="deleteProductFromOrder(i)" [disabled]="!this.selectedProduct" pButton></button>
+        </div>
+      </div>
+
+      <p-divider class="col-12"></p-divider>
+
+      <div class="align-items-center justify-content-center">
+        <h3>Ajouter une indication :</h3>
+        <textarea pInputTextarea cols="20" rows=6 [(ngModel)]="note"></textarea>
+      </div>
+
+      <button label="Passer commande" icon="pi pi-check" class="mt-6" (click)="order()" [disabled]="this.selectedProducts.length == 0" pButton></button>
+    </div>
+  </p-tabPanel>
+</p-tabView>

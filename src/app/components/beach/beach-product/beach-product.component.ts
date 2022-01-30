@@ -74,6 +74,5 @@ export class BeachProductComponent implements OnInit {
 
   onProductsLoad(products: Product[]) {
     this.products = products.map((product) => { return { ...product, price: product.BeachProduct!.price, } })
-    debugger;
   }
 }

@@ -143,4 +143,12 @@ export class ApiService {
   sendOrder(orderId: number, restaurantId: number){
     return this.http.post(`${this.apiUrl}orders/${orderId}/restaurant/${restaurantId}`, {});
   }
+
+  orderReceived(orderId: number) {
+    return this.http.post(`${this.apiUrl}orders/${orderId}`, {});
+  }
+
+  createOrder(products: (Product & { details: { quantity: number}})[], note: string, beachId: number){
+    return this.http.post(`${this.apiUrl}orders/beach/${beachId}`, { products, note });
+  }
 }

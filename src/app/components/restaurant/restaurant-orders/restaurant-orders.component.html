@@ -3,6 +3,9 @@
   <div *ngFor="let order of this.orders" class="col-6">
     <p-card [header]="order.beach.name" [subheader]="'Par ' + order.user.firstname + ', il y a ' + order.timeElapsed">
       <ng-template pTemplate="content">
+        <div *ngIf="order.note" class="mb-4">
+          Note : {{order.note}}
+        </div>
         <div *ngFor="let product of order.contains">
           <div (click)="validateProduct(order, product)">
             {{product.name}}
@@ -14,6 +17,6 @@
         <button label="Tout valider" icon="pi pi-check" class="mr-4 mb-2" (click)="confirmValidateAll(order)" pButton></button>
         <button label="Commander envoyée" icon="pi pi-send" class="p-button-danger mb-2" (click)="confirmOrderSent(order)" pButton></button>
       </ng-template>
-    </p-card>
-  </div>
+      </p-card>
+    </div>
 </div>

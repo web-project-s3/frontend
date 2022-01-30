@@ -12,5 +12,5 @@ export class Order {
   timeElapsed: string = "";
   declare user: User;
   declare beach: Beach;
-  declare contains: (Product & { details: { ready: boolean, quantity: number } })[];
+  declare contains: (Product & { details: { ready: boolean, sent : boolean, quantity: number } })[];
 }

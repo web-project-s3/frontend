@@ -55,6 +55,8 @@ export class RestaurantOrdersComponent implements OnInit {
 
   activeOrdersHandler(orders: Order[]) {
     this.orders = orders;
+    this.orders.sort((order_one, order_two) => new Date(order_one.createdAt).getTime() - new Date(order_two.createdAt).getTime());
+    this.updateTimeElapsedNoTimeout();
   }
 
   updateTimeElapsed() {
@@ -66,6 +68,15 @@ export class RestaurantOrdersComponent implements OnInit {
     })
 
     setTimeout(this.updateTimeElapsed.bind(this), 1000);
+  }
+
+  updateTimeElapsedNoTimeout() {
+    this.orders.forEach(order => {
+      let seconds = (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000;
+      const minutes = Math.floor(seconds / 60);
+      seconds = seconds % 60;
+      order.timeElapsed = minutes == 0 ? `${seconds.toFixed(0)}s` : `${minutes}m ${seconds.toFixed(0)}s`;
+    })
   }
 
   validateProduct(order: Order, product: Product) {
