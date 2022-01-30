@@ -4,7 +4,7 @@
     <p-card [header]="order.beach.name" [subheader]="'Par ' + order.user.firstname + ', il y a ' + order.timeElapsed">
       <ng-template pTemplate="content">
         <div *ngFor="let product of order.contains">
-          <div (click)="test(product)">
+          <div (click)="validateProduct(order, product)">
             {{product.name}}
             <p-badge [value]="'' + product.details.quantity" [severity]="product.details.ready ? 'success' : 'danger'" styleClass="ml-2"></p-badge>
           </div>

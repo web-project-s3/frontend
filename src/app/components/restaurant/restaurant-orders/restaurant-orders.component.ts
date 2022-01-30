@@ -62,14 +62,16 @@ export class RestaurantOrdersComponent implements OnInit {
       let seconds = (new Date().getTime() - new Date(order.createdAt).getTime()) / 1000;
       const minutes = Math.floor(seconds / 60);
       seconds = seconds % 60;
-      order.timeElapsed = minutes == 0 ? `${seconds}s` : `${minutes}m ${seconds.toFixed(0)}s`;
+      order.timeElapsed = minutes == 0 ? `${seconds.toFixed(0)}s` : `${minutes}m ${seconds.toFixed(0)}s`;
     })
 
     setTimeout(this.updateTimeElapsed.bind(this), 1000);
   }
 
-  test(product: Product & { details: { ready: boolean, quantity: number } }) {
-    product.details.ready = !product.details.ready;
+  validateProduct(order: Order, product: Product) {
+    this.api.validateProduct(order.id, product.id).subscribe({
+      error: console.log
+    });
   }
 
   confirmValidateAll(order: Order) {
@@ -78,8 +80,10 @@ export class RestaurantOrdersComponent implements OnInit {
       acceptLabel: "Oui",
       rejectLabel: "Non",
       accept: () => {
-
-
+        order.contains.forEach(product => {
+          if ( !product.details.ready)
+            this.validateProduct(order, product);
+        })
 
       }
     });
@@ -91,9 +95,9 @@ export class RestaurantOrdersComponent implements OnInit {
       acceptLabel: "Oui",
       rejectLabel: "Non",
       accept: () => {
-
-
-
+        this.api.sendOrder(order.id, this.restaurant!.id).subscribe({
+          error: console.log
+        });
       }
    });
   }

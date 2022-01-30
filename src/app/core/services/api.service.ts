@@ -135,4 +135,12 @@ export class ApiService {
   deleteProductFromBeach(restaurantId: number, beachId: number, productId: number) {
     return this.http.delete(`${this.apiUrl}restaurants/${restaurantId}/product/${productId}/beach/${beachId}`);
   }
+
+  validateProduct(orderId: number, productId: number) {
+    return this.http.post(`${this.apiUrl}orders/${orderId}/product/${productId}`, {});
+  }
+
+  sendOrder(orderId: number, restaurantId: number){
+    return this.http.post(`${this.apiUrl}orders/${orderId}/restaurant/${restaurantId}`, {});
+  }
 }
