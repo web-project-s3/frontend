@@ -157,6 +157,14 @@ export class AdminComponent implements OnInit {
     this.router.navigate([`beach/${id}/product`]);
   }
 
+  beachOrders(id: number) {
+    this.router.navigate([`beach/${id}/orders`])
+  }
+
+  restaurantOrders(id: number) {
+    this.router.navigate([`restaurant/${id}/orders`])
+  }
+
   deleteRestaurant(id: number) {
     this.api.deleteRestaurant(id).subscribe({
       next: (value) => {

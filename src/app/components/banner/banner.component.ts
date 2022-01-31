@@ -1,10 +1,8 @@
-import { AfterContentChecked, ApplicationRef, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef, ViewRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { Observable, of, Subject } from 'rxjs';
-import { Menubar } from 'primeng/menubar';
 
 @Component({
   selector: 'app-banner',
@@ -50,7 +48,8 @@ export class BannerComponent implements OnInit {
       },
       {
         label:'Commandes',
-        icon:'pi pi-fw pi-tags'
+        icon:'pi pi-fw pi-tags',
+        command: this.goToRestaurantOrderPage.bind(this)
       }]
   }
 
@@ -71,7 +70,8 @@ export class BannerComponent implements OnInit {
       },
       {
         label:'Commandes',
-        icon:'pi pi-fw pi-tags'
+        icon:'pi pi-fw pi-tags',
+        command: this.goToBeachOrderPage.bind(this)
       }]
   }
 
@@ -165,12 +165,20 @@ export class BannerComponent implements OnInit {
       this.router.navigate(["/restaurant/" + this.restaurantId + "/product"]);
     }
 
+    goToRestaurantOrderPage() {
+      this.router.navigate(["/restaurant/" + this.restaurantId + "/orders"]);
+    }
+
     goToBeachEditPage()  {
       this.router.navigate(["/beach/" + this.beachId + "/edit"]);
     }
 
     goToBeachProductPage()  {
       this.router.navigate(["/beach/" + this.beachId + "/product"]);
+    }
+
+    goToBeachOrderPage()  {
+      this.router.navigate(["/beach/" + this.beachId + "/orders"]);
     }
 
     goToUserEditPage() {
