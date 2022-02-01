@@ -2,22 +2,12 @@ on: push
 name: Build Angular
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v1
-      - name: Cache node modules
-      - uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Setup node
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 16.13.1
-      - name: npm install & build
       - run: npm install
       - run: npm run build
       - uses: mr-smithers-excellent/docker-build-push@v5
