@@ -25,4 +25,4 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/angular-githubaction/*"
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.WEB_S3_BUILD_TOKEN }}
