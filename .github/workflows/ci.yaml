@@ -17,12 +17,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16.13.1
-      - name: npm install and npm run build
-        run: |
-          npm i
-          npm run build
-      - name: Push Build to Releases
-        uses: ncipollo/release-action@v1
+      - name: npm install & build
+      - run: npm install
+      - run: npm run build
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: build
         with:
-          artifacts: "dist/angular-githubaction/*"
-          token: ${{ secrets.WEB_S3_BUILD_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          image: frontend
+          tags: ${{ github.sha }}
