@@ -8,15 +8,6 @@ WORKDIR /usr/src/app
 COPY . .
 RUN npm install && npm run build
 
-###
-### Construction de l'image de production (2ème partie)
-###
-FROM node:16.13.1 as runtime-container
-WORKDIR /usr/src/app
-
-COPY --from=tsc-builder /usr/src/app/dist ./dist
-COPY --from=tsc-builder ["/usr/src/app/package.json", "/usr/src/app/package-lock.json", "./"]
-
 ############
 ### prod ###
 ############
@@ -25,6 +16,8 @@ COPY --from=tsc-builder ["/usr/src/app/package.json", "/usr/src/app/package-lock
 FROM nginx:1.16.0-alpine
 
 # copy artifact build from the 'build environment'
+# COPY --from=tsc-builder /usr/src/app/dist/frontend /usr/share/nginx/html
+
 COPY --from=tsc-builder /usr/src/app/dist/frontend /usr/share/nginx/html
 COPY --from=tsc-builder /usr/src/app/nginx.conf /etc/nginx/nginx.conf
 
