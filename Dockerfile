@@ -19,7 +19,7 @@ FROM nginx:1.16.0-alpine
 # COPY --from=tsc-builder /usr/src/app/dist/frontend /usr/share/nginx/html
 
 COPY --from=tsc-builder /usr/src/app/dist/frontend /usr/share/nginx/html
-COPY --from=tsc-builder /usr/src/app/nginx.conf /etc/nginx/nginx.conf
+COPY --from=tsc-builder /usr/src/app/deployment /etc/nginx
 
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
