@@ -26,7 +26,7 @@ FROM nginx:1.16.0-alpine
 
 # copy artifact build from the 'build environment'
 COPY --from=tsc-builder /usr/src/app/dist/frontend /usr/share/nginx/html
-
+COPY /usr/src/app/nginx.conf /etc/nginx/nginx.conf
 
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
