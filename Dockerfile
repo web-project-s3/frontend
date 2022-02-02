@@ -25,7 +25,7 @@ COPY --from=tsc-builder ["/usr/src/app/package.json", "/usr/src/app/package-lock
 FROM nginx:1.16.0-alpine
 
 # copy artifact build from the 'build environment'
-COPY --from=tsc-builder /usr/src/app/dist/frontend /usr/share/nginx/html
+COPY --from=tsc-builder /usr/src/app/ /usr/src/app/
 RUN ls /usr/src/app/
 COPY --from=tsc-builder /usr/src/app/nginx.conf /etc/nginx/nginx.conf
 
