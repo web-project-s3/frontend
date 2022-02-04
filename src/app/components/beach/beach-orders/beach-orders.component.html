@@ -53,7 +53,7 @@
         <div *ngFor="let product of this.selectedProducts; let i = index " class="mb-4 flex align-items-center">
           {{product.name}} ({{product.restaurant.name}}) :
           <p-badge [severity]="'info'" styleClass="mx-2" [value]="'' + product.details.quantity"></p-badge>
-          <button icon="pi pi-trash" class="p-button-danger" (click)="deleteProductFromOrder(i)" [disabled]="!this.selectedProduct" pButton></button>
+          <button icon="pi pi-trash" class="p-button-danger" (click)="deleteProductFromOrder(i)" pButton></button>
         </div>
       </div>
 
