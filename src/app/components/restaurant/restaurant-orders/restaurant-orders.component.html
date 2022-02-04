@@ -1,13 +1,13 @@
 <div class="grid m-4 ">
   <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+  <div *ngIf="this.orders.length == 0" class="align-self-center justify-content-center">
+    <h1>
+      Aucune commande en cours
+    </h1>
+  </div>
   <div *ngFor="let order of this.orders" class="col-6">
     <p-card [header]="order.beach.name" [subheader]="'Par ' + order.user.firstname + ', il y a ' + order.timeElapsed">
       <ng-template pTemplate="content">
-        <div *ngIf="this.orders.length == 0" class="align-self-center justify-content-center">
-          <h1>
-            Aucune commande en cours
-          </h1>
-        </div>
         <div *ngFor="let product of order.contains">
           <div (click)="validateProduct(order, product)">
             {{product.name}}
