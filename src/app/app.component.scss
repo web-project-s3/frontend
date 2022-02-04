@@ -2,10 +2,10 @@ body {
   background-color: var(--surface-b);
   font-family: var(--font-family);
   color: var(--text-color);
-  min-height: 2000vh;
 }
 
 :host ::ng-deep .p-menubar {
   background-color: var(--blue-900) !important;
 }
 
+html {display:table;width:100%; /* need to set a width to 100%, wich means here a min-width since it is displayed with the same specifities thas has a table , it shrinks and expand according to its content */}
