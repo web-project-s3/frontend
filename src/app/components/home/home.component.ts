@@ -27,6 +27,14 @@ export class HomeComponent implements OnInit {
     if ( !this.auth.isAdmin() && !this.auth.worksAtRestaurant() && !this.auth.worksAtBeach())
       this.mustRegister = true;
     else
+    {
       this.mustRegister = false;
+      if ( this.auth.isAdmin() )
+        this.router.navigate(["/admin"])
+      else if ( this.auth.worksAtRestaurant() )
+        this.router.navigate([user?.restaurantOwnerId != null ? `/restaurant/${user.restaurantOwnerId}/edit` : `/restaurant/${user?.restaurantEmployeeId}/orders` ])
+      else if ( this.auth.worksAtBeach())
+        this.router.navigate([user?.beachOwnerId != null ? `/beach/${user.beachOwnerId}/edit` : `/beach/${user?.beachEmployeeId}/orders` ])
+    }
   }
 }
