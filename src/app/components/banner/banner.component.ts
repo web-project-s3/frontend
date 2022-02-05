@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { NavigationService } from 'src/app/core/services/naviguation.service';
 
 @Component({
   selector: 'app-banner',
@@ -13,6 +14,13 @@ export class BannerComponent implements OnInit {
 
   restaurantId = 0;
   beachId = 0;
+
+  backItem: MenuItem = {
+    label:'Retour',
+    styleClass: 'ml-4 mr-6',
+    icon:'pi pi-fw pi-chevron-left',
+    command: this.goBack.bind(this)
+  }
 
   logoutItem: MenuItem = {
     label:'Utilisateur',
@@ -99,7 +107,7 @@ export class BannerComponent implements OnInit {
 
   items: MenuItem[] = [];
 
-  constructor(private auth: AuthService, private router: Router ) {
+  constructor(private auth: AuthService, private router: Router, private navigation: NavigationService ) {
     this.auth.user$.subscribe({
       next: (value) => this.onUserChange(value)
     })
@@ -107,6 +115,7 @@ export class BannerComponent implements OnInit {
 
     ngOnInit() {
       this.items = [
+        this.backItem,
         this.restaurantItem,
         this.beachItem,
         this.adminItem,
@@ -185,5 +194,9 @@ export class BannerComponent implements OnInit {
 
     goToUserEditPage() {
       this.router.navigate(["/user/" + this.auth._user.getValue()?.id + "/edit"]);
+    }
+
+    goBack(): void {
+      this.navigation.back()
     }
 }
