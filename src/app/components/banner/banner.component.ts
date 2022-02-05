@@ -196,7 +196,11 @@ export class BannerComponent implements OnInit {
       this.router.navigate(["/user/" + this.auth._user.getValue()?.id + "/edit"]);
     }
 
-    goBack(): void {
+    goBack() {
       this.navigation.back()
+    }
+
+    goHome() {
+      this.router.navigate(["/home"]);
     }
 }
