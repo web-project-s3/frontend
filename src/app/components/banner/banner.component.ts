@@ -143,8 +143,10 @@ export class BannerComponent implements OnInit {
       this.beachItem.visible = this.auth.worksAtBeach();
       // Edit
       this.beachItem.items![0].visible = this.auth.ownsBeach();
+      // Products
+      this.beachItem.items![1].visible = this.auth.ownsBeach();
       // Orders
-      this.beachItem.items![1].visible = this.auth.worksAtBeach();
+      this.beachItem.items![2].visible = this.auth.worksAtBeach();
 
       // Admin :
       this.adminItem.visible = this.auth.isAdmin();
